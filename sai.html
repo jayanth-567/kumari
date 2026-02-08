@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Good Online Tuition</title>
+
+<style>
+/* ====== BODY BACKGROUND ====== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #c084fc, #6a1b9a, #12002f);
+  overflow-x: hidden;
+  color: white;
+}
+
+/* ====== MOON ====== */
+.moon {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #fff, #ddd);
+  border-radius: 50%;
+  box-shadow: 0 0 50px 20px rgba(255,255,255,0.7);
+  animation: moonGlow 3s infinite alternate;
+}
+
+@keyframes moonGlow {
+  from { box-shadow: 0 0 40px 15px rgba(255,255,255,0.6); }
+  to { box-shadow: 0 0 70px 30px rgba(255,255,255,0.9); }
+}
+
+/* ====== LIGHTNING EFFECT ====== */
+.lightning {
+  position: fixed;
+  inset: 0;
+  background: rgba(180,120,255,0.2);
+  animation: flash 6s infinite;
+  pointer-events: none;
+}
+
+@keyframes flash {
+  0%,92%,100% { opacity: 0; }
+  93%,95% { opacity: 1; }
+}
+
+/* ====== HEADER ====== */
+header {
+  text-align: center;
+  padding: 80px 20px 40px;
+}
+
+header h1 {
+  font-size: 42px;
+  animation: slideDown 1s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ====== FLOATING IMAGES ====== */
+.floating img {
+  position: absolute;
+  width: 100px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating img:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+  100% { transform: translateY(0); }
+}
+
+/* ====== FORM CONTAINER ====== */
+.container {
+  background: rgba(255,255,255,0.95);
+  color: #333;
+  max-width: 420px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  animation: zoomIn 0.8s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+input, select {
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+/* ====== BUTTON ====== */
+button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  background: linear-gradient(45deg, #7b1fa2, #ab47bc);
+  color: white;
+  cursor: pointer;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(171,71,188,0.6); }
+  70% { box-shadow: 0 0 0 20px rgba(171,71,188,0); }
+  100% { box-shadow: 0 0 0 0 rgba(171,71,188,0); }
+}
+
+/* ====== POPUPS ====== */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background: white;
+  color: #6a1b9a;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+<div class="lightning"></div>
+
+<header>
+  <h1>Good Online Tuition</h1>
+  <p>Intermediate • Diploma • Mechanical • Electrical</p>
+</header>
+
+<!-- MOVING IMAGES -->
+<div class="floating">
+  <img src="f70d3da3-26b8-4489-b24e-3f1503aec624.png" style="top:30%; left:5%;">
+  <img src="f70d3da3-26b8-4489-b24e-3f1503aec624.png" style="top:65%; right:5%;">
+</div>
+
+<div class="container">
+  <h2 style="text-align:center">Student Registration</h2>
+
+  <input id="name" placeholder="Student Name">
+  <input id="mobile" placeholder="Mobile Number">
+
+  <select id="course" onchange="showCongrats()">
+    <option value="">Select Course</option>
+    <option>Intermediate</option>
+    <option>Diploma</option>
+    <option>Mechanical Engineering</option>
+    <option>Electrical Engineering</option>
+  </select>
+
+  <button onclick="register()">Register & Continue</button>
+</div>
+
+<!-- ALERT -->
+<div class="popup" id="alert">
+  <div class="popup-box">
+    <h3>⚠️ Fill All Details</h3>
+    <button onclick="closeAlert()">OK</button>
+  </div>
+</div>
+
+<!-- CONGRATS -->
+<div class="popup" id="congrats">
+  <div class="popup-box">
+    <h2>🎉 Congratulations!</h2>
+    <p>You selected a great course</p>
+    <button onclick="closeCongrats()">Continue</button>
+  </div>
+</div>
+
+<script>
+function register() {
+  let name = document.getElementById("name").value;
+  let mobile = document.getElementById("mobile").value;
+  let course = document.getElementById("course").value;
+
+  if (!name || !mobile || !course) {
+    document.getElementById("alert").style.display = "flex";
+    return;
+  }
+
+  let msg = `Hello ${name},%0AYou registered for ${course}.%0APayment UPI: 7036450816@ybl`;
+  window.open(`https://wa.me/91${mobile}?text=${msg}`, "_blank");
+}
+
+function closeAlert() {
+  document.getElementById("alert").style.display = "none";
+}
+
+function showCongrats() {
+  if (document.getElementById("course").value)
+    document.getElementById("congrats").style.display = "flex";
+}
+
+function closeCongrats() {
+  document.getElementById("congrats").style.display = "none";
+}
+</script>
+
+</body>
+</html>
